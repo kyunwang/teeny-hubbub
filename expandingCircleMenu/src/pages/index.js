@@ -16,8 +16,6 @@ class MainPage extends PureComponent {
 	render() {
 		const { isMenuOpen } = this.state;
 
-		console.log(isMenuOpen);
-
 		return (
 			<Container>
 				<MenuIcon handleOnClick={this.onClickMenuIcon} isOpen={isMenuOpen} />
