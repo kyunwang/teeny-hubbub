@@ -1,21 +1,8 @@
-import React, {
-	PureComponent,
-	useRef,
-	useState,
-	useEffect,
-	useCallback,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import {
-	useSpring,
-	useTransition,
-	useTrail,
-	animated,
-	interpolate,
-} from 'react-spring';
-// import Navigation from './Navigation';
+import { useSpring, useTransition, useTrail, animated } from 'react-spring';
 import { Link } from 'gatsby';
 
 const defLinks = [
@@ -26,7 +13,6 @@ const defLinks = [
 ];
 
 const NavContainer = styled.div`
-	font-family: 'josefin sans', 'work sans', sans-serif;
 	font-style: italic;
 	position: absolute;
 	top: 0;
@@ -45,40 +31,63 @@ const NavBG = styled(animated.div)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #27638d;
-	height: 3rem;
-	width: 3rem;
+	background: ${({ theme }) => theme.color.secondary};
+	height: 3.2rem;
+	width: 3.2rem;
 	border-radius: 50%;
 	padding: 0.8rem;
 `;
 
-const NavLinksContainer = styled.ul`
+const LinksContainer = styled.ul`
 	display: flex;
 	flex-direction: column;
 	position: relative;
-
 	top: 50%;
 	right: 2.4rem;
 	bottom: auto;
 	transform: translateY(-50%);
-
 	font-size: 3rem;
 	text-align: right;
-	color: #fff;
 	line-height: 1.2;
 
 	${({ theme }) =>
-		theme.breakpoints.small(`
+		theme.breakpoint.small(`
 			top: 40%;
 			font-size: 2.4rem;
 	`)}
 `;
 
-const NavLink = styled(animated.li)`
+const LinkItem = styled(animated.li)`
 	position: relative;
 	display: inline-block;
 	transform-origin: top right;
-	/* line-height: 1.2; */
+	overflow: hidden;
+	color: ${({ theme }) => theme.color.primary};
+`;
+
+const StyledTitle = styled.p`
+	position: relative;
+
+	${({ theme }) => `
+		transition: opacity 666ms ${theme.transition.bezier.easeOutQuint},
+								transform 666ms ${theme.transition.bezier.easeOutQuint};
+	`}
+
+	&:hover {
+		transform: translateX(-12%);
+	}
+
+	&::before {
+		content: '';
+		display: inline-block;
+		position: absolute;
+		height: 2px;
+		width: 1.2rem;
+		background: ${({ theme }) => theme.color.primary};
+		right: -8%;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 `;
 
 // Spring config
@@ -90,6 +99,7 @@ const scaling = {
 	},
 	closed: {
 		transform: 'scale(1)',
+		delay: 300,
 		config,
 	},
 };
@@ -97,29 +107,26 @@ const scaling = {
 const Navigation = ({ isOpen }) => {
 	const springScaling = useSpring(!isOpen ? scaling.closed : scaling.open);
 
-	//  likely use trail
-	const transitions = useTransition(defLinks, link => link.link, {
+	const springLinks = useTrail(defLinks.length, {
 		from: { opacity: 0, transform: 'scale(0)' },
-		enter: { opacity: 1, transform: 'scale(1)' },
-		leave: { opacity: 0, transform: 'scale(0)' },
-		update: {
-			opacity: isOpen ? 1 : 0,
-			transform: isOpen ? 'scale(1)' : 'scale(0)',
-		},
-		// reverse: isOpen ? false : true,
-		trail: 150,
+		opacity: isOpen ? 1 : 0,
+		transform: isOpen ? 'scale(1)' : 'scale(0)',
+		reverse: isOpen ? false : true,
 	});
 
 	return (
 		<NavContainer>
 			<NavBG style={springScaling}></NavBG>
-			<NavLinksContainer>
-				{transitions.map(({ item, props, key }) => (
-					<NavLink key={key} style={props}>
-						{item.title}
-					</NavLink>
+
+			<LinksContainer>
+				{springLinks.map((props, index) => (
+					<LinkItem key={defLinks[index].title} style={props}>
+						<Link>
+							<StyledTitle>{defLinks[index].title}</StyledTitle>
+						</Link>
+					</LinkItem>
 				))}
-			</NavLinksContainer>
+			</LinksContainer>
 		</NavContainer>
 	);
 };

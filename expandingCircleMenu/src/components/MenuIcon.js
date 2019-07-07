@@ -9,16 +9,17 @@ const Container = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #27638d;
-	height: 3rem;
-	width: 3rem;
+	background: ${({ theme }) => theme.color.primary};
+	height: 3.2rem;
+	width: 3.2rem;
 	border-radius: 50%;
 	border-color: #fff;
 	padding: 0.8rem;
 
+	/* Above Navigation(NavContainer) - which is 998 */
 	z-index: 999;
 
-	transition: transform ${({ theme }) => theme.transitions.duration.short}ms
+	transition: transform ${({ theme }) => theme.transition.duration.short}ms
 		ease-in-out;
 
 	&:hover {
