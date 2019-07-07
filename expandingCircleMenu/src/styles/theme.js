@@ -2,7 +2,7 @@ const theme = {
 	color: {
 		primary: '#f9527a',
 		secondary: '#f8f7ef',
-		white: '$fff',
+		white: '#fff',
 	},
 	breakpoint: {
 		small: style => `@media (max-aspect-ratio: 1/1) { ${style} }`,

@@ -47,6 +47,7 @@ const GlobalStyle = createGlobalStyle`
 		box-sizing: border-box;
 	}
 
+	/* Personal reset */
 	button {
 		cursor: pointer;
 	}
