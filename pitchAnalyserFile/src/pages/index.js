@@ -1,9 +1,10 @@
 import React from 'react';
 // import styled from 'styled-components';
 import Container from '../components/general/Container';
-// import DropContainer from '../components/DropContainer';
+import DropContainer from '../components/DropContainer';
 
-import { fileAnalyse } from 'pitch-analyser';
+import { fileAnalyse } from '/Users/wky/Documents/_Projects/_Personal/_Archive/2018/pitch-analyser/dist/bundle';
+// import { fileAnalyse } from 'pitch-analyser';
 
 class MainPage extends React.PureComponent {
   static propTypes = {};
@@ -30,13 +31,7 @@ class MainPage extends React.PureComponent {
   render() {
     return (
       <Container>
-        {/* <DropContainer inputRef={this.fileInputRef} /> */}
-        <input
-          accept="audio/*"
-          name="audio_file"
-          ref={this.fileInputRef}
-          type="file"
-        ></input>
+        <DropContainer inputRef={this.fileInputRef} />
         <button onClick={this.handleClick}>Analyze</button>
       </Container>
     );
