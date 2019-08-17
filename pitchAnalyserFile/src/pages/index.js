@@ -1,7 +1,7 @@
 import React from 'react';
 // import styled from 'styled-components';
 import Container from '../components/general/Container';
-import DropContainer from '../components/DropContainer';
+import DropContainer from '../components/DropContainer/DropContainer';
 
 import { fileAnalyse } from '/Users/wky/Documents/_Projects/_Personal/_Archive/2018/pitch-analyser/dist/bundle';
 // import { fileAnalyse } from 'pitch-analyser';
